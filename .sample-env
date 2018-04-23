@@ -1,8 +1,8 @@
 APP_HOST=host
 APP_PORT=number
 
-PG_USER=whoami
-PG_PASSWORD=secret
-PG_DATABASE=dbName
-PG_HOST=host
-PG_PORT=number
+DB_USER=whoami
+DB_PASSWORD=secret
+DB_DATABASE=dbName
+DB_HOST=host
+DB_PORT=number

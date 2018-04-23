@@ -1,0 +1,22 @@
+@import "base";
+
+* {
+  box-sizing: border-box;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	border-radius: inherit;
+  border-color: inherit;
+	color: inherit;
+	text-align: inherit;
+}
+
+html, body, ul, h1, h2, h3, h4, h5, h6, p, em, strong {
+ 	padding: 0;
+ 	margin: 0;
+}
+
+html, body {
+	height: 100vh;
+  width: 100vw;
+}
