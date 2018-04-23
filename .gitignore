@@ -1,0 +1,6 @@
+.DS_Store
+
+# just node tings
+node_modules/
+package-lock.json
+.env
