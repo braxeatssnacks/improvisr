@@ -8,10 +8,13 @@ module.exports = {
     database: {
       user: process.env.DB_USER || 'user',
       password: process.env.DB_PASSWORD || 'secret',
-      database: process.env.DB_DATABASE || 'dbName',
+      database: process.env.DB_DATABASE || `${__dirname}/app/utils/db.json`,
       host: process.env.DB_HOST || 'localhost',
       port: process.env.DB_PORT || 5432,
-      max: 10,                           // maxmimum number of clients in pool
-      idleTimeoutMillis: 3000            // how long client can remain idle
+    },
+    paths: {
+      video: `${__dirname}/app/public/videos`,
+      image: `${__dirname}/app/public/images`,
+      thumb: `${__dirname}/app/public/images/thumbs`
     }
 };

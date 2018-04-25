@@ -24,13 +24,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // middleware for static assets
 app.use(sass({
-  src: `${__dirname}/app/public/sass`,
-  dest: `${__dirname}/app/public/css`,
+  src: `${__dirname}/app/sass`,
+  dest: `${__dirname}/app/public/styles`,
   debug: true,
   force: true,
   outputStyle: 'nested'
 }));
 app.use(express.static(`${__dirname}/app/public`));
+app.use('/favicon.ico', express.static(`${__dirname}/app/public/images/favicon.ico`));
 
 const modules = {
   app: app,

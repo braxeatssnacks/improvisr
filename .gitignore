@@ -1,5 +1,6 @@
 .DS_Store
 videos/
+db.json
 
 # just node tings
 node_modules/
