@@ -9,7 +9,7 @@ let db;
 try {
   db = JSON.parse(fs.readFileSync(config.database.database));
 } catch(err) {
-  db = {};
+  db = { videos: {} };
 }
 let old_db = Object.assign({}, db);
 
@@ -79,8 +79,8 @@ args.forEach((link) => {
           url: info.url
         };
 
-        db[key] = entry;
-        fs.writeFileSync(config.database.database, JSON.stringify(db, null, 2));
+        db["videos"][key] = entry;
+        fs.writeFileSync(config.database.database, JSON.stringify(db));
         console.log('db write successful!');
       });
     }

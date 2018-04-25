@@ -1,5 +1,6 @@
 .DS_Store
 videos/
+thumbs/
 db.json
 
 # just node tings

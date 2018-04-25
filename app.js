@@ -5,6 +5,7 @@ const hbs = require('express-hbs');
 const sass = require('node-sass-middleware');
 
 const config = require('./config.js');
+const db = JSON.parse(fs.readFileSync(config.database.database));
 
 const app = express();
 
@@ -37,6 +38,7 @@ const modules = {
   app: app,
   bodyParser: bodyParser,
   config: config,
+  db: db, // readonly
   express: express,
   fs: fs
 };
@@ -49,3 +51,14 @@ fs.readdirSync(`${__dirname}/app/controllers`).forEach((fname) => {
 app.listen(config.server.port, config.server.host, () => {
   console.log(`Webserver started @ http://${config.server.host}:${config.server.port}`);
 });
+
+// exit with grace
+let gracefulShutdown = () => {
+  console.log('Received kill signal, shutting down gracefully...');
+  fs.writeFileSync(config.database.database, JSON.stringify(db));
+  console.log('Successfuly wrote to db');
+  process.exit()
+};
+
+process.on ('SIGTERM', gracefulShutdown);
+process.on ('SIGINT', gracefulShutdown);

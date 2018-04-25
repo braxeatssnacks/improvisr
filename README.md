@@ -17,7 +17,9 @@
 ```
 You already know what time it is.
 
-Nothing but **Node.js**, blood, sweat, tears, & coffee.
+Nothing but **Node.js**, blood, sweat, tears, & coffee. special s/o to
+[Learn Jazz Standards](https://www.youtube.com/channel/UCc8qFJqyNiCxcuPAPwJo0DQ)
+over at Youtube for the prime backing tracks
 
 &nbsp;
 
