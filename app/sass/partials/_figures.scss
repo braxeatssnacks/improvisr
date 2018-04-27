@@ -2,13 +2,8 @@
 
 * {
   box-sizing: border-box;
-	font-family: inherit;
-	font-size: inherit;
-	font-weight: inherit;
 	border-radius: inherit;
   border-color: inherit;
-	color: inherit;
-	text-align: inherit;
 }
 
 html, body, ul, h1, h2, h3, h4, h5, h6, p, em, strong {
@@ -16,7 +11,203 @@ html, body, ul, h1, h2, h3, h4, h5, h6, p, em, strong {
  	margin: 0;
 }
 
-html, body {
+ul {
+  list-style: none;
+}
+
+body {
 	height: 100vh;
   width: 100vw;
+  background-color: $white,
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.no-radius {
+  border-radius: 0;
+}
+
+$outside-spacing: 4.167em;
+$default-spacing: 2.5em;
+
+.top-shelf, .bottom-shelf {
+  padding: $outside-spacing;
+}
+.top-shelf {
+  background-color: $white;
+  padding-bottom: $outside-spacing/2;
+}
+.bottom-shelf {
+  background-color: $off-white;
+  padding-top: $outside-spacing/2;
+}
+
+/* image/video overlay */
+.overlay {
+  background-color: rgba($midnight, 0.6);
+}
+
+/* video player */
+
+.player__video {
+  $bottom-account: 3px; // <video> relative space hack
+
+  width: 100%;
+  margin-bottom: $outside-spacing/2;
+
+  .overlay {
+    bottom: $bottom-account;
+  }
+
+  video {
+    width: 100%;
+    height: 20vw;
+    // height: 25em;
+    object-fit: cover;
+  }
+
+  .player__info,
+  .player__controls {
+    padding: $default-spacing;
+  }
+
+  .player__info {
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  .player__controls {
+    $height: 20px;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: -($height / 2);
+
+    .progress {
+      $thickness: 6px;
+
+      background-color: rgba($slate, 0.4);
+      height: $thickness;
+      margin-bottom: $default-spacing / 2;
+
+      .progress__fill {
+        height: 100%;
+        background-color: $red;
+
+        &::after { // knob
+          content: "";
+          display: block;
+          position: absolute;
+          height: 10px;
+          width: 10px;
+          right: -5px;
+          top: 50%;
+          margin-top: -5px;
+          background-color: inherit;
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .controls {
+      height: $height;
+      padding: 0 $default-spacing / 3;
+
+      & * {
+        height: inherit;
+      }
+
+      .button, .video-time {
+        display: inline-block;
+        margin-right: $default-spacing;
+        line-height: $height;
+        white-space: nowrap;
+        overflow: hidden;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+/* mic input detection */
+.input__audio {
+  cursor: pointer;
+  height: 100px;
+  background-color: $black;
+  background-image: (url('images/mic_128-128.svg'));
+  background-size: 36px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.prompt-container {
+  margin-bottom: $default-spacing;
+}
+
+.catalogue__videos {
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  .catalogue__videos-container {
+    width: 100%;
+    white-space: nowrap;
+    padding-bottom: 2em;
+
+    .video-card {
+      display: inline-block;
+      width: 310px;
+      margin-right: $default-spacing;
+      white-space: normal;
+      cursor: pointer;
+
+      &.active {
+        display: none;
+      }
+
+      .thumbnail-container {
+        height: 110px;
+
+        .thumbnail {
+          width: 100%;
+          height: 100%;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+      }
+
+      .card__content {
+        padding: $default-spacing;
+        background-color: $white;
+      }
+    }
+  }
+
+}
+
+.sheet-music-modal-container {
+  top: 0;
+  right: 0;
+  height: 100%;
+
+  .music__sheet-wrapper {
+    padding: $outside-spacing;
+
+    .music__sheet {
+      background-color: $white;
+      height: 100%;
+
+      .music-title {
+
+      }
+    }
+  }
 }

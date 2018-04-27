@@ -59,31 +59,31 @@ args.forEach((link) => {
       });
     }
 
-    if (db.hasOwnProperty(id)) {
-      console.log(`video entry already in db`);
-    } else {
-      // update db
-      download.getInfo(link, [], (err, info) => {
-        if (err) return console.log('sheesh! error grabbing info:', err);
+    // update db
+    download.getInfo(link, [], (err, info) => {
+      if (err) return console.log('sheesh! error grabbing info:', err);
 
-        console.assert(info.id == id, `WARNING: info id and video id mismatch`);
-        let key = info.id;
-        let entry = {
-          id: key,
-          title: info.title,
-          fpath: fpath,
-          thumb: new_fpath,
-          uploader: info.uploader,
-          descr: info.description,
-          duration: info.duration,
-          url: info.url
-        };
+      console.assert(info.id == id, `WARNING: info id and video id mismatch`);
+      let key = info.id;
+      let entry = {
+        id: key,
+        descr: info.description,
+        duration: info.duration,
+        raw_duration: info._duration_raw,
+        fpath: `videos/${info.id}.mp4`,
+        height: info.height,
+        width: info.width,
+        thumb: `images/thumbs/${info.id}.jpg`,
+        title: info.title,
+        uploader: info.uploader,
+        uploaderId: info.uploader_id,
+        url: info.webpage_url
+      };
 
-        db["videos"][key] = entry;
-        fs.writeFileSync(config.database.database, JSON.stringify(db));
-        console.log('db write successful!');
-      });
-    }
+      db["videos"][key] = entry;
+      fs.writeFileSync(config.database.database, JSON.stringify(db, null, 4));
+      console.log('db write successful!');
+    });
   });
 
   /* TODO makeshift database versioning */

@@ -1,29 +1,22 @@
 // imports for all mixins + global project variables
+@import "../../public/fonts/youtube_sans";
 
 // Font weights
-$light: 100;
-$regular: 400;
-$bold: 600;
+$light: 300;
+$regular: 500;
+$bold: 700;
 
 // Base Font
-$base-font-family: sans-serif;
-$base-font-weight: $regular;
-$base-font-size: 13px;
-$base-line-height: 1.4;
+$base-font-family: 'YouTube Sans';
+$base-font-weight: $light;
+$base-font-size: 1em;
+$base-line-height: 1.5;
 
-// Fixed Font
-$fixed-font-family: monospace;
-$fixed-font-size: 85%;
-$fixed-line-height: $base-line-height;
-
-// Headings
+// header
 $header-font-weight: $bold;
 
 // Borders
-$border-width: 2px;
-$border-radius: 5px;
-
-// Padding
-$spacing: 30px;
+$border-width: 1px;
+$border-radius: 8px;
 
 @import "modules/all";

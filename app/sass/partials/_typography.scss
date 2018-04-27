@@ -1,0 +1,86 @@
+@import "base.scss";
+
+$default-height: 2.5em;
+$default-line-height: 2em;
+
+* {
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	color: inherit;
+	text-align: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-decoration: none;
+  -webkit-text-stroke: 0.45px;
+}
+
+body {
+  font-family: $base-font-family;
+  font-size: 12px;
+  font-weight: $light;
+  color: #626A83;
+	letter-spacing: 0.125em;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  line-height: $default-line-height;
+}
+
+[data-link], a {
+  color: $blue;
+  text-decoration: none;
+}
+
+[contenteditable] {
+	outline: 0;
+	cursor: text;
+
+	&:hover,
+	&:focus {
+		text-decoration: underline;
+	}
+}
+
+.prompt { // section prompts
+  font-size: $default-height;
+  font-weight: $bold;
+}
+
+.subprompt {
+  font-size: $base-font-size;
+  font-weight: $light;
+	color: $light-blue;
+}
+
+.video-title {
+  font-size: $base-font-size + .3em;
+  letter-spacing: 0.14em;
+  font-weight: $regular;
+}
+
+.video-uploader,
+.video-time {
+  font-size: $base-font-size;
+  letter-spacing: 0.12em;
+}
+
+.music-title {
+  font-size: $default-height;
+  font-weight: $bold;
+}
+
+/* within video player white text for background contrast */
+.player__video {
+  color: $white;
+
+  .video-uploader {
+    color: $grey;
+  }
+}
+
+.video-meta {
+  font-size: $base-font-size;
+  font-weight: $light;
+  color: $light-blue;
+}

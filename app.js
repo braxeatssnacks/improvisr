@@ -32,13 +32,13 @@ app.use(sass({
   outputStyle: 'nested'
 }));
 app.use(express.static(`${__dirname}/app/public`));
-app.use('/favicon.ico', express.static(`${__dirname}/app/public/images/favicon.ico`));
+app.use('/favicon.ico', express.static(`${config.paths.image}/favicon.ico`));
 
 const modules = {
   app: app,
   bodyParser: bodyParser,
   config: config,
-  db: db, // readonly
+  db: db,   // readonly for now
   express: express,
   fs: fs
 };

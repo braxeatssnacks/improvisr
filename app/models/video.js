@@ -33,8 +33,8 @@ Video.findById = (videoDb, id, callback) => {
 
 Video.all = (videoDb, callback) => {
   let results = [];
-  for (let prop in videoDb) {
-    results.push(new Video(videoDb[prop]));
+  for (let id in videoDb) {
+    results.push(new Video(videoDb[id]));
   }
   return callback(null, results);
 };

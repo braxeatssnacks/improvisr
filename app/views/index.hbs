@@ -1,2 +1,84 @@
+<!-- video section -->
+<div class="row top-shelf">
 
-{{>video}}
+  <div class="col col-5 rounded controllers-container">
+    <div class="player__video relative">
+      <div class="overlay"></div>
+      <video id="video" src="" poster=""></video>
+
+      <div class="absolute player__info">
+        <div class="player__info-wrapper">
+          <h3 id="video-title" class="truncate video-title"></h3>
+          <h2 id="video-uploader" class="truncate video-uploader"></h2>
+        </div>
+      </div>
+
+      <div class="absolute player__controls">
+        <div class="player__controls-wrapper">
+          <div class="progress">
+            <div id="progress-bar" class="relative progress__fill"
+              style="width: 30%"></div>
+          </div>
+
+          <div class="row no-radius controls">
+            <div class="col buttons">
+              <div id="play" class="clickable button" data-action="toggle-play">
+                <img src="images/play_128-128.svg" />
+              </div>
+              <div id="volume" class="clickable button" data-action="toggle-mute">
+                <img src="images/volume_128-128.svg" />
+              </div>
+              <div class="video-time">
+                <span id="time-left" class="inline-block">3:00</span> /
+                <span id="time-total" class="inline-block">6:55</span>
+              </div>
+            </div>
+
+            <div class="col right right-align buttons">
+              <div id="settings" class="clickable button" data-action="toggle-settings">
+                <img src="images/gear_128-128.svg" />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="input__audio">
+      <div class="backdrop-wrapper">
+        <canvas id="levels-watch"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="col col-7 filler"></div>
+</div>
+
+<div class="row relative bottom-shelf">
+  <div class="col col-5 content-container">
+    <div class="prompt-container ">
+      <h1 class="prompt">Getting bored with that one?</h1>
+      <h3 class="subprompt">Check out these other tracks you might enjoy.</h3>
+    </div>
+
+    <div class="catalogue__videos">
+      <ul id="catalogue" class="catalogue__videos-container">
+
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="col col-7 filler"></div>
+</div>
+
+<!-- same size as filler divs -->
+<div class="col-7 absolute rounded sheet-music-modal-container">
+  <div class="music__sheet-wrapper">
+    <div id="music-sheet" class=" center music__sheet">
+      <h2 class="music-title" contenteditable>My Fabulous Piece</h2>
+    </div>
+  </div>
+</div>

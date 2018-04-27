@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf ./app/public/videos/* && rm -rf ./app/public/images/thumbs/* && rm -rf ./app/db.json",
     "dl": "node ./app/utils/video-dl.js"
   },
   "author": "Braxton Gunter <braxton.gun@gmail.com>",

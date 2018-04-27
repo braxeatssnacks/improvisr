@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "YouTube Sans";
+  src: url("files/YouTube-Sans-Light.otf") format("otf");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "YouTube Sans";
+  src: url("files/YouTube-Sans-Medium.otf") format("otf");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "YouTube Sans";
+  src: url("files/YouTube-Sans-Bold.otf") format("otf");
+  font-weight: 700;
+  font-style: normal;
+}
