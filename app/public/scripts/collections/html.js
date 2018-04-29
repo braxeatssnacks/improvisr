@@ -1,13 +1,15 @@
-import { $video } from './elements.js';
+import {
+  $play,
+  $title,
+  $uploader,
+  $video,
+  $videoOverlay,
+} from './elements.js';
 
-var PlaylistEntry = function() {
+export var PlaylistEntry = function() {
   var self = this;
 
-  this.$video = $video;
-  this.activeClass = 'active';
-
   this.onClick = function(e) {
-
     // grab all <li> siblings
     var siblings = [];
     var node = this.parentNode.firstChild;
@@ -23,11 +25,47 @@ var PlaylistEntry = function() {
     });
     this.className += ' '+self.activeClass;
 
-    // play video
-    self.$video.src = this.dataset.src;
-    self.$video.poster = this.dataset.thumb;
-    // self.$video.autoplay = true;
+    $video.pause();
+
+    $video.src = this.dataset.src;
+    $video.poster = this.dataset.thumb;
+    $title.innerText = this.dataset.title;
+    $uploader.innerText = this.dataset.user;
+    // $video.autoplay = true;
   };
 };
+PlaylistEntry.prototype.activeClass = 'active';
 
-export default { PlaylistEntry };
+export var VideoPlay = function() {
+  var self = this;
+
+  this.togglePlay = function(e) {
+    if ($video.paused) {
+      $videoOverlay.classList.add(self.activeClass);
+      $video.play();
+    } else {
+      $videoOverlay.classList.remove(self.activeClass);
+      $video.pause();
+    }
+  };
+
+  this.updateButton = function() {
+    var $img = $play.firstElementChild;
+    if (this.paused) {
+      $img.src = self.playImg;
+    } else if (this.ended) {
+      $img.src = self.replayImg;
+    } else {
+      $img.src = self.pauseImg;
+    }
+  };
+};
+VideoPlay.prototype.activeClass = 'playing';
+VideoPlay.prototype.playImg = 'images/play_128-128.svg';
+VideoPlay.prototype.pauseImg = 'images/pause_128-128.svg';
+VideoPlay.prototype.replayImg = 'images/replay_128-128.svg';
+
+export default {
+  PlaylistEntry,
+  VideoPlay,
+};

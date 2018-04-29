@@ -1,9 +1,12 @@
 // import statements
 import html from './html.js';
 import view from './view.js';
+import { $video } from './elements.js';
 
 function populatePlaylist($parent, videos) {
   var $fragment = document.createDocumentFragment();
+  var videoPlay = new html.VideoPlay();
+
   videos.forEach((elem, i) => {
     var $li = document.createElement('li');
 
@@ -21,7 +24,10 @@ function populatePlaylist($parent, videos) {
 
     // add event listeners
     var entry = new html.PlaylistEntry();
-    $li.addEventListener('click', entry.onClick);
+    $li.addEventListener('click', function(e) {
+      entry.onClick.bind($li)(e);
+      videoPlay.updateButton.bind($video)();
+    });
 
     // visual elements
     var $thumbnailContainer = document.createElement('div');
@@ -45,7 +51,7 @@ function populatePlaylist($parent, videos) {
     $uploader.className = 'truncate video-uploader';
 
     $title.appendChild(document.createTextNode(elem.data.title));
-    $uploader.appendChild(document.createTextNode('@'+elem.data.uploader));
+    $uploader.appendChild(document.createTextNode(elem.data.uploader));
     $content.appendChild($title);
     $content.appendChild($uploader);
     $li.appendChild($content);
@@ -62,7 +68,7 @@ function all() {
     $elements.video.src = defaultVideo.data.fpath;
     $elements.video.poster = defaultVideo.data.thumb;
     $elements.title.innerText = defaultVideo.data.title;
-    $elements.uploader.innerText = '@'+defaultVideo.data.uploader;
+    $elements.uploader.innerText = defaultVideo.data.uploader;
     populatePlaylist($elements.playlist, data);
   });
 }

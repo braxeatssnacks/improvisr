@@ -18,19 +18,23 @@ ul {
 body {
 	height: 100vh;
   width: 100vw;
-  background-color: $white,
+  background-color: $off-white,
 }
 
 .clickable {
   cursor: pointer;
+}
+.animated {
+  transition-duration: 0.3s;
 }
 
 .no-radius {
   border-radius: 0;
 }
 
-$outside-spacing: 4.167em;
+$outside-spacing: 3.5em;
 $default-spacing: 2.5em;
+$z-index-max: 1000;
 
 .top-shelf, .bottom-shelf {
   padding: $outside-spacing;
@@ -58,7 +62,12 @@ $default-spacing: 2.5em;
   margin-bottom: $outside-spacing/2;
 
   .overlay {
+    transition-property: background-color;
+    z-index: $z-index-max - 200;
     bottom: $bottom-account;
+  }
+  .overlay.playing {
+    background-color: rgba($midnight, 0.3);
   }
 
   video {
@@ -70,6 +79,7 @@ $default-spacing: 2.5em;
 
   .player__info,
   .player__controls {
+    z-index: $z-index-max - 100;
     padding: $default-spacing;
   }
 
@@ -141,18 +151,37 @@ $default-spacing: 2.5em;
   cursor: pointer;
   height: 100px;
   background-color: $black;
-  background-image: (url('images/mic_128-128.svg'));
+  background-image: url('images/mic_128-128.svg');
   background-size: 36px;
   background-position: center;
   background-repeat: no-repeat;
+
+  audio {
+    display: none;
+  }
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .prompt-container {
   margin-bottom: $default-spacing;
 }
 
+.fade-left {
+  z-index: $z-index-max - 300;
+  height: 100%;
+  width: 70%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, rgba($off-white, 0), rgba($off-white, 1) 90%);
+}
+
 .catalogue__videos {
-  width: 100%;
+  width: 110%;
+  padding-right: $default-spacing;
   overflow-x: scroll;
   overflow-y: hidden;
 
@@ -190,13 +219,13 @@ $default-spacing: 2.5em;
       }
     }
   }
-
 }
 
 .sheet-music-modal-container {
   top: 0;
   right: 0;
   height: 100%;
+  z-index: $z-index-max;
 
   .music__sheet-wrapper {
     padding: $outside-spacing;
@@ -206,7 +235,6 @@ $default-spacing: 2.5em;
       height: 100%;
 
       .music-title {
-
       }
     }
   }

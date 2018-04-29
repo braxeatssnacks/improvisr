@@ -3,7 +3,7 @@
 
   <div class="col col-5 rounded controllers-container">
     <div class="player__video relative">
-      <div class="overlay"></div>
+      <div id="video-overlay" class="animated overlay"></div>
       <video id="video" src="" poster=""></video>
 
       <div class="absolute player__info">
@@ -17,7 +17,7 @@
         <div class="player__controls-wrapper">
           <div class="progress">
             <div id="progress-bar" class="relative progress__fill"
-              style="width: 30%"></div>
+              style="width: 0%"></div>
           </div>
 
           <div class="row no-radius controls">
@@ -47,7 +47,8 @@
 
     <div class="input__audio">
       <div class="backdrop-wrapper">
-        <canvas id="levels-watch"></canvas>
+        <audio id="mic-input" src="amber.mp3" autoplay></audio>
+        <canvas id="mic-levels"></canvas>
       </div>
     </div>
 
@@ -64,14 +65,12 @@
     </div>
 
     <div class="catalogue__videos">
-      <ul id="catalogue" class="catalogue__videos-container">
-
-      </ul>
+      <ul id="catalogue" class="catalogue__videos-container"></ul>
     </div>
-
   </div>
 
   <div class="col col-7 filler"></div>
+  <!-- <div class="absolute fade-left"></div> -->
 </div>
 
 <!-- same size as filler divs -->

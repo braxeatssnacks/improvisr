@@ -414,24 +414,27 @@ ul {
 body {
   height: 100vh;
   width: 100vw;
-  background-color: #FFFFFF; }
+  background-color: #F5F5F5; }
 
 .clickable {
   cursor: pointer; }
+
+.animated {
+  transition-duration: 0.3s; }
 
 .no-radius {
   border-radius: 0; }
 
 .top-shelf, .bottom-shelf {
-  padding: 4.167em; }
+  padding: 3.5em; }
 
 .top-shelf {
   background-color: #FFFFFF;
-  padding-bottom: 2.0835em; }
+  padding-bottom: 1.75em; }
 
 .bottom-shelf {
   background-color: #F5F5F5;
-  padding-top: 2.0835em; }
+  padding-top: 1.75em; }
 
 /* image/video overlay */
 .overlay {
@@ -440,15 +443,20 @@ body {
 /* video player */
 .player__video {
   width: 100%;
-  margin-bottom: 2.0835em; }
+  margin-bottom: 1.75em; }
   .player__video .overlay {
+    transition-property: background-color;
+    z-index: 800;
     bottom: 3px; }
+  .player__video .overlay.playing {
+    background-color: rgba(42, 46, 65, 0.3); }
   .player__video video {
     width: 100%;
     height: 20vw;
     object-fit: cover; }
   .player__video .player__info,
   .player__video .player__controls {
+    z-index: 900;
     padding: 2.5em; }
   .player__video .player__info {
     top: 0;
@@ -501,12 +509,27 @@ body {
   background-size: 36px;
   background-position: center;
   background-repeat: no-repeat; }
+  .input__audio audio {
+    display: none; }
+  .input__audio canvas {
+    width: 100%;
+    height: 100%; }
 
 .prompt-container {
   margin-bottom: 2.5em; }
 
+.fade-left {
+  z-index: 700;
+  height: 100%;
+  width: 70%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, rgba(245, 245, 245, 0), whitesmoke 90%); }
+
 .catalogue__videos {
-  width: 100%;
+  width: 110%;
+  padding-right: 2.5em;
   overflow-x: scroll;
   overflow-y: hidden; }
   .catalogue__videos .catalogue__videos-container {
@@ -536,9 +559,10 @@ body {
 .sheet-music-modal-container {
   top: 0;
   right: 0;
-  height: 100%; }
+  height: 100%;
+  z-index: 1000; }
   .sheet-music-modal-container .music__sheet-wrapper {
-    padding: 4.167em; }
+    padding: 3.5em; }
     .sheet-music-modal-container .music__sheet-wrapper .music__sheet {
       background-color: #FFFFFF;
       height: 100%; }
@@ -609,7 +633,8 @@ h1, h2, h3, h4, h5, h6, p {
 .video-uploader,
 .video-time {
   font-size: 1em;
-  letter-spacing: 0.12em; }
+  letter-spacing: 0.12em;
+  text-transform: lowercase; }
 
 .music-title {
   font-size: 2.5em;
