@@ -12,13 +12,14 @@ import {
   $progressBar,
   $video,
   $videoOverlay as $videoPlayer,
+  $volume,
 } from './collections/elements.js';
 
 function ready() {
   init.all();
   var videoPlayer = new VideoPlay();
   var audioVisualizer = new AudioVisualize($canvas, null, {
-    color: '#EB6B98',
+    color: '#65CEAD',
     stream: true
   });
 
@@ -47,9 +48,9 @@ function ready() {
     }
   });
   // icon updates
-  $video.addEventListener('play', videoPlayer.updateButton);
-  $video.addEventListener('pause', videoPlayer.updateButton);
-  $video.addEventListener('ended', videoPlayer.updateButton);
+  $video.addEventListener('play', videoPlayer.updatePlayButton);
+  $video.addEventListener('pause', videoPlayer.updatePlayButton);
+  $video.addEventListener('ended', videoPlayer.updatePlayButton);
   // playback updates & scrubbing
   $video.addEventListener('timeupdate', videoPlayer.handleProgress);
   var mousedown = false;
@@ -59,6 +60,9 @@ function ready() {
   });
   $progressBar.parentNode.addEventListener('mousedown', () => mousedown = true);
   $progressBar.parentNode.addEventListener('mouseup', () => mousedown = false);
+  // sound
+  $volume.addEventListener('click', videoPlayer.toggleSound);
+  $video.addEventListener('volumechange', videoPlayer.updateVolumeButton);
 }
 
 window.addEventListener('load', ready); // need styles ready

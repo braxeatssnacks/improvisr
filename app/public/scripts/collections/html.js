@@ -8,6 +8,7 @@ import {
   $uploader,
   $video,
   $videoOverlay,
+  $volume,
 } from './elements.js';
 
 export function PlaylistEntry() {
@@ -44,6 +45,7 @@ PlaylistEntry.prototype.activeClass = 'active';
 
 export function VideoPlay() {
   var self = this;
+  var lastVolumeLevel;
 
   this.togglePlay = function(e) {
     if ($video.paused) {
@@ -55,7 +57,7 @@ export function VideoPlay() {
     }
   };
 
-  this.updateButton = function() {
+  this.updatePlayButton = function() {
     var $img = $play.firstElementChild;
     if (this.ended) {
       $img.src = self.replayImg;
@@ -63,6 +65,24 @@ export function VideoPlay() {
       $img.src = self.playImg;
     } else {
       $img.src = self.pauseImg;
+    }
+  };
+
+  this.toggleSound = function(e) {
+    if ($video.muted || $video.volume == 0.0) {
+      $video.volume = lastVolumeLevel || 1.0;
+    } else {
+      $video.volume = 0;
+    }
+  }
+
+  this.updateVolumeButton = function() {
+    var $img = $volume.firstElementChild;
+    if (this.muted || this.volume) {
+      $img.src = self.volumeImg;
+    } else {
+      $img.src = self.muteImg;
+      lastVolumeLevel = $video.volume;
     }
   };
 
@@ -82,6 +102,8 @@ VideoPlay.prototype.activeClass = 'playing';
 VideoPlay.prototype.playImg = 'images/play_128-128.svg';
 VideoPlay.prototype.pauseImg = 'images/pause_128-128.svg';
 VideoPlay.prototype.replayImg = 'images/replay_128-128.svg';
+VideoPlay.prototype.volumeImg = 'images/volume_128-128.svg';
+VideoPlay.prototype.muteImg = 'images/mute_128-128.svg';
 
 export default {
   PlaylistEntry,
