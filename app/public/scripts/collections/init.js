@@ -17,7 +17,7 @@ function populatePlaylist($parent, videos) {
     $li.dataset.src = elem.data.fpath;
     $li.dataset.thumb = elem.data.thumb;
     // $li.dataset.descr = elem.data.descr;
-    $li.dataset.dur = elem.data.duration;
+    $li.dataset.duration = elem.data.duration;
     $li.dataset.title = elem.data.title;
     $li.dataset.user = elem.data.uploader;
     $li.dataset.url = elem.data.url;
@@ -69,6 +69,8 @@ function all() {
     $elements.video.poster = defaultVideo.data.thumb;
     $elements.title.innerText = defaultVideo.data.title;
     $elements.uploader.innerText = defaultVideo.data.uploader;
+    $elements.timeTotal.innerText = defaultVideo.data.duration;
+
     populatePlaylist($elements.playlist, data);
   });
 }

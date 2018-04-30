@@ -1,12 +1,16 @@
+import { getStrTimeFromSeconds } from './util.js';
 import {
   $play,
+  $progressBar,
+  $timePassed as $progress,
+  $timeTotal as $duration,
   $title,
   $uploader,
   $video,
   $videoOverlay,
 } from './elements.js';
 
-export var PlaylistEntry = function() {
+export function PlaylistEntry() {
   var self = this;
 
   this.onClick = function(e) {
@@ -31,12 +35,14 @@ export var PlaylistEntry = function() {
     $video.poster = this.dataset.thumb;
     $title.innerText = this.dataset.title;
     $uploader.innerText = this.dataset.user;
+    $duration.innerText = this.dataset.duration;
+    $progress.innerText = '0:00';
     // $video.autoplay = true;
   };
-};
+}
 PlaylistEntry.prototype.activeClass = 'active';
 
-export var VideoPlay = function() {
+export function VideoPlay() {
   var self = this;
 
   this.togglePlay = function(e) {
@@ -51,15 +57,27 @@ export var VideoPlay = function() {
 
   this.updateButton = function() {
     var $img = $play.firstElementChild;
-    if (this.paused) {
-      $img.src = self.playImg;
-    } else if (this.ended) {
+    if (this.ended) {
       $img.src = self.replayImg;
+    } else if (this.paused) {
+      $img.src = self.playImg;
     } else {
       $img.src = self.pauseImg;
     }
   };
-};
+
+  this.handleProgress = function() {
+    var percent = ($video.currentTime / $video.duration) * 100;
+    var timePassed = getStrTimeFromSeconds($video.currentTime);
+    $progress.innerText = timePassed;
+    $progressBar.style.width = percent+'%';
+  };
+
+  this.scrub = function(e) {
+    var scrubTime = (e.offsetX / this.offsetWidth) * $video.duration;
+    $video.currentTime = scrubTime;
+  }
+}
 VideoPlay.prototype.activeClass = 'playing';
 VideoPlay.prototype.playImg = 'images/play_128-128.svg';
 VideoPlay.prototype.pauseImg = 'images/pause_128-128.svg';

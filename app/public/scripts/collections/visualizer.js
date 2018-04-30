@@ -1,4 +1,8 @@
-export var AudioVisualizer = function($canvas, $audio, opts={}) {
+function hasGetUserMedia() {
+  return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+}
+
+export function AudioVisualize($canvas, $audio, opts={}) {
   var self = this;
 
   var displayBins = 512; // NOTE: power of 2
@@ -8,13 +12,13 @@ export var AudioVisualizer = function($canvas, $audio, opts={}) {
 
   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   var audioAnalyserNode = audioContext.createAnalyser();
-  var audioBuffer;
   audioAnalyserNode.fftSize = displayBins * 8;
 
   /* optional parameters */
-  this.barColor = opts.hasOwnProperty('color') ? opts['color'] : '#EF9563';
+  this.strokeColor = opts.hasOwnProperty('color') ? opts['color'] : '#EF9563';
   this.backgroundColor = opts.hasOwnProperty('backgroundColor') ? opts['backgroundColor'] : 'transparent';
   this.drawFilled = opts.hasOwnProperty('drawFilled') ? opts['drawFilled'] : false;
+  this.stream = opts.hasOwnProperty('stream') ? opts['stream'] : false;
 
   var initialized = false;
   var canvas = {
@@ -46,7 +50,7 @@ export var AudioVisualizer = function($canvas, $audio, opts={}) {
     // basically any volume will push over [floorLevel] so set = bottom threshold
     var height = Math.max(0, (binValue - floorLevel)); // logarithmic
     // scale to height of bar
-    height = (height / (512 - floorLevel) * canvas.height * 0.8);
+    height = (height / (340 - floorLevel) * canvas.height * 0.8);
     return height;
   };
 
@@ -86,7 +90,7 @@ export var AudioVisualizer = function($canvas, $audio, opts={}) {
 
     self.updateBins(data); // change bin info on audio
 
-    canvas.context.fillStyle = self.barColor;
+    canvas.context.fillStyle = self.strokeColor;
     canvas.context.beginPath();
     canvas.context.moveTo(0, canvas.height - self.getBinHeight(0));
 
@@ -123,20 +127,27 @@ export var AudioVisualizer = function($canvas, $audio, opts={}) {
 
   this.init = function() {
     // setup canvas
-    canvas.context.strokeStyle = self.barColor;
+    canvas.context.strokeStyle = self.strokeColor;
     window.requestAnimationFrame(self.paint);
 
-    // setup audio element
-    var src = audioContext.createMediaElementSource($audio);
+    // setup audio element / stream
+    var src;
+    if ($audio) {
+      src = audioContext.createMediaElementSource($audio);
+    } else if (self.stream) {
+      src = audioContext.createMediaStreamSource(self.stream);
+    }
+
     self.createLookupTable(audioAnalyserNode.frequencyBinCount);
     src.connect(audioAnalyserNode);
-    audioAnalyserNode.connect(audioContext.destination);
+    if (!self.stream)
+      audioAnalyserNode.connect(audioContext.destination);
 
     initialized = true;
   };
 
-  this.init();
+  // this.init(); // self initialize
 };
 
 
-export default { AudioVisualizer }
+export default { AudioVisualize }

@@ -29,8 +29,8 @@
                 <img src="images/volume_128-128.svg" />
               </div>
               <div class="video-time">
-                <span id="time-left" class="inline-block">3:00</span> /
-                <span id="time-total" class="inline-block">6:55</span>
+                <span id="time-passed" class="inline-block">0:00</span> /
+                <span id="time-total" class="inline-block"></span>
               </div>
             </div>
 
@@ -47,8 +47,7 @@
 
     <div class="input__audio">
       <div class="backdrop-wrapper">
-        <audio id="mic-input" src="amber.mp3" autoplay></audio>
-        <canvas id="mic-levels"></canvas>
+        <canvas id="mic-levels" height="100px" width="400px"></canvas>
       </div>
     </div>
 
@@ -77,7 +76,7 @@
 <div class="col-7 absolute rounded sheet-music-modal-container">
   <div class="music__sheet-wrapper">
     <div id="music-sheet" class=" center music__sheet">
-      <h2 class="music-title" contenteditable>My Fabulous Piece</h2>
+      <h2 id="music-title" class="music__title" contenteditable>My Fabulous Piece</h2>
     </div>
   </div>
 </div>

@@ -1,5 +1,11 @@
 import fetch from './fetch.js';
-import { $video, $title, $uploader, $playlist } from './elements.js';
+import {
+  $playlist,
+  $timeTotal,
+  $title,
+  $uploader,
+  $video,
+} from './elements.js';
 
 // base api routes
 var __videos = 'api/videos';
@@ -9,7 +15,13 @@ function _video(opts={}, callback=_videoDefaultAjax) {
   fetch.getAjax(
     __videos,
     opts,
-    { video: $video, title: $title, uploader: $uploader, playlist: $playlist },
+    {
+      video: $video,
+      title: $title,
+      timeTotal: $timeTotal,
+      uploader: $uploader,
+      playlist: $playlist
+    },
     callback
   );
 }
