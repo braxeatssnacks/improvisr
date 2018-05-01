@@ -160,6 +160,23 @@ $z-index-max: 1000;
   background-position: center;
   background-repeat: no-repeat;
 
+  &.live::after {
+    content: '◉ REC';
+    display: block;
+    position: absolute;
+    top: 0.8em;
+    right: 0.8em;
+    color: $grey;
+    width: 40px;
+    height: 10px;
+  }
+
+  &.live.recording::after {
+    transition: inherit;
+    color: $red;
+    @include pulsate;
+  }
+
   audio {
     display: none;
   }
@@ -185,7 +202,7 @@ $z-index-max: 1000;
 }
 
 .catalogue__videos {
-  width: 110%;
+  width: 100%;
   padding-right: $default-spacing;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -237,7 +254,47 @@ $z-index-max: 1000;
 
     .music__sheet {
       background-color: $white;
+      padding: 0 $default-spacing;
       height: 100%;
+
+
+      .vague {
+        color: $light-blue;
+      }
+      .confident {
+        color: $black;
+      }
+      .perfect-pitch {
+        color: $green;
+      }
+
+
+      .note {
+        height: 2em;
+      }
+
+      .detune {
+
+        [class*='-cents'] {
+          display: none;
+        }
+        &.flat {
+          .flat-cents {
+            display: inline-block;
+          }
+        }
+        &.sharp {
+          .sharp-cents {
+            display: inline-block;
+          }
+        }
+
+      }
+
+
+      .music {
+        width: 100%;
+      }
     }
   }
 }

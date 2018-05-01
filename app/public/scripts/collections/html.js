@@ -1,5 +1,6 @@
 import { getStrTimeFromSeconds } from './util.js';
 import {
+  $inputAudio,
   $play,
   $progressBar,
   $timePassed as $progress,
@@ -10,6 +11,23 @@ import {
   $videoOverlay,
   $volume,
 } from './elements.js';
+
+export function AudioRecorder(pitchDetector) {
+  var self = this;
+
+  this.toggleRecording = function(e) {
+    if (this.classList.contains(self.recordingClass)) {
+      // stop recording
+      this.classList.remove(self.recordingClass);
+      pitchDetector.active = false;
+    } else {
+      // start recording
+      this.classList.add(self.recordingClass);
+      pitchDetector.active = true;
+    }
+  }
+}
+AudioRecorder.prototype.recordingClass = 'recording';
 
 export function PlaylistEntry() {
   var self = this;
@@ -37,13 +55,15 @@ export function PlaylistEntry() {
     $title.innerText = this.dataset.title;
     $uploader.innerText = this.dataset.user;
     $duration.innerText = this.dataset.duration;
+    // reset
     $progress.innerText = '0:00';
+    $progressBar.style.width = '0%';
     // $video.autoplay = true;
   };
 }
 PlaylistEntry.prototype.activeClass = 'active';
 
-export function VideoPlay() {
+export function VideoPlayer() {
   var self = this;
   var lastVolumeLevel;
 
@@ -59,13 +79,15 @@ export function VideoPlay() {
 
   this.updatePlayButton = function() {
     var $img = $play.firstElementChild;
+    $img.style.display = 'none';
     if (this.ended) {
-      $img.src = self.replayImg;
+      $img.src = self.replayImg + '?v=' + Date.now(); // caching finesse
     } else if (this.paused) {
-      $img.src = self.playImg;
+      $img.src = self.playImg + '?v=' + Date.now();
     } else {
-      $img.src = self.pauseImg;
+      $img.src = self.pauseImg + '?v=' + Date.now();
     }
+    $img.style.display = 'block';
   };
 
   this.toggleSound = function(e) {
@@ -78,12 +100,14 @@ export function VideoPlay() {
 
   this.updateVolumeButton = function() {
     var $img = $volume.firstElementChild;
-    if (this.muted || this.volume) {
-      $img.src = self.volumeImg;
+    $img.style.display = 'none';
+    if (this.volume) {
+      $img.src = self.volumeImg + '?v=' + Date.now();
     } else {
-      $img.src = self.muteImg;
+      $img.src = self.muteImg + '?v=' + Date.now();
       lastVolumeLevel = $video.volume;
     }
+    $img.style.display = 'block';
   };
 
   this.handleProgress = function() {
@@ -98,14 +122,15 @@ export function VideoPlay() {
     $video.currentTime = scrubTime;
   }
 }
-VideoPlay.prototype.activeClass = 'playing';
-VideoPlay.prototype.playImg = 'images/play_128-128.svg';
-VideoPlay.prototype.pauseImg = 'images/pause_128-128.svg';
-VideoPlay.prototype.replayImg = 'images/replay_128-128.svg';
-VideoPlay.prototype.volumeImg = 'images/volume_128-128.svg';
-VideoPlay.prototype.muteImg = 'images/mute_128-128.svg';
+VideoPlayer.prototype.activeClass = 'playing';
+VideoPlayer.prototype.playImg = 'images/play_128-128.svg';
+VideoPlayer.prototype.pauseImg = 'images/pause_128-128.svg';
+VideoPlayer.prototype.replayImg = 'images/replay_128-128.svg';
+VideoPlayer.prototype.volumeImg = 'images/volume_128-128.svg';
+VideoPlayer.prototype.muteImg = 'images/mute_128-128.svg';
 
 export default {
+  AudioRecorder,
   PlaylistEntry,
-  VideoPlay,
+  VideoPlayer,
 };

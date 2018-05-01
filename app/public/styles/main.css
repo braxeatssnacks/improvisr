@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "YouTube Sans";
   src: url("files/YouTube-Sans-Light.otf") format("otf");
@@ -16,23 +17,55 @@
   font-weight: 700;
   font-style: normal; }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Light.otf") format("otf");
-  font-weight: 300;
-  font-style: normal; }
+/* utilities */
+@-webkit-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Medium.otf") format("otf");
-  font-weight: 500;
-  font-style: normal; }
+@-moz-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Bold.otf") format("otf");
-  font-weight: 700;
-  font-style: normal; }
+@-ms-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+@keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+/* utilities */
+@-webkit-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+@-moz-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+@-ms-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+@keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
 [class*="_test"] {
   border-style: dashed !important;
@@ -381,23 +414,30 @@
   .lg-col-12 {
     width: 100%; } }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Light.otf") format("otf");
-  font-weight: 300;
-  font-style: normal; }
+/* utilities */
+@-webkit-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Medium.otf") format("otf");
-  font-weight: 500;
-  font-style: normal; }
+@-moz-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Bold.otf") format("otf");
-  font-weight: 700;
-  font-style: normal; }
+@-ms-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+@keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
 * {
   box-sizing: border-box;
@@ -511,6 +551,38 @@ body {
   background-size: 36px;
   background-position: center;
   background-repeat: no-repeat; }
+  .input__audio.live::after {
+    content: '◉ REC';
+    display: block;
+    position: absolute;
+    top: 0.8em;
+    right: 0.8em;
+    color: #78839B;
+    width: 40px;
+    height: 10px; }
+  .input__audio.live.recording::after {
+    transition: inherit;
+    color: #EB6B98;
+    -webkit-animation-duration: 0.8s;
+    -moz-animation-duration: 0.8s;
+    -o-animation-duration: 0.8s;
+    animation-duration: 0.8s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: pulsate;
+    -moz-animation-name: pulsate;
+    -o-animation-name: pulsate;
+    animation-name: pulsate;
+    -webkit-animation-direction: normal;
+    -moz-animation-direction: normal;
+    -o-animation-direction: normal;
+    animation-direction: normal;
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    -o-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out; }
   .input__audio audio {
     display: none; }
   .input__audio canvas {
@@ -531,7 +603,7 @@ body {
   background: linear-gradient(to right, rgba(245, 245, 245, 0), whitesmoke 90%); }
 
 .catalogue__videos {
-  width: 110%;
+  width: 100%;
   padding-right: 2.5em;
   overflow-x: scroll;
   overflow-y: hidden; }
@@ -568,25 +640,49 @@ body {
     padding: 3.5em; }
     .sheet-music-modal-container .music__sheet-wrapper .music__sheet {
       background-color: #FFFFFF;
+      padding: 0 2.5em;
       height: 100%; }
+      .sheet-music-modal-container .music__sheet-wrapper .music__sheet .vague {
+        color: #989FB7; }
+      .sheet-music-modal-container .music__sheet-wrapper .music__sheet .confident {
+        color: #444444; }
+      .sheet-music-modal-container .music__sheet-wrapper .music__sheet .perfect-pitch {
+        color: #65CEAD; }
+      .sheet-music-modal-container .music__sheet-wrapper .music__sheet .note {
+        height: 2em; }
+      .sheet-music-modal-container .music__sheet-wrapper .music__sheet .detune [class*='-cents'] {
+        display: none; }
+      .sheet-music-modal-container .music__sheet-wrapper .music__sheet .detune.flat .flat-cents {
+        display: inline-block; }
+      .sheet-music-modal-container .music__sheet-wrapper .music__sheet .detune.sharp .sharp-cents {
+        display: inline-block; }
+      .sheet-music-modal-container .music__sheet-wrapper .music__sheet .music {
+        width: 100%; }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Light.otf") format("otf");
-  font-weight: 300;
-  font-style: normal; }
+/* utilities */
+@-webkit-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Medium.otf") format("otf");
-  font-weight: 500;
-  font-style: normal; }
+@-moz-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
-@font-face {
-  font-family: "YouTube Sans";
-  src: url("files/YouTube-Sans-Bold.otf") format("otf");
-  font-weight: 700;
-  font-style: normal; }
+@-ms-keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+
+@keyframes pulsate {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
 * {
   font-family: inherit;
@@ -648,6 +744,9 @@ h1, h2, h3, h4, h5, h6, p {
   color: #FFFFFF; }
   .player__video .video-uploader {
     color: #78839B; }
+
+.note {
+  font-size: 5em; }
 
 .video-meta {
   font-size: 1em;

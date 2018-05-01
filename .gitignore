@@ -2,6 +2,7 @@
 videos/
 thumbs/
 db.json
+resources/
 
 # just node tings
 node_modules/

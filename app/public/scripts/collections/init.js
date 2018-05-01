@@ -1,11 +1,14 @@
 // import statements
-import html from './html.js';
+import {
+  PlaylistEntry,
+  VideoPlayer,
+} from './html.js';
 import view from './view.js';
 import { $video } from './elements.js';
 
 function populatePlaylist($parent, videos) {
   var $fragment = document.createDocumentFragment();
-  var videoPlay = new html.VideoPlay();
+  var videoPlayer = new VideoPlayer();
 
   videos.forEach((elem, i) => {
     var $li = document.createElement('li');
@@ -23,10 +26,10 @@ function populatePlaylist($parent, videos) {
     $li.dataset.url = elem.data.url;
 
     // add event listeners
-    var entry = new html.PlaylistEntry();
+    var entry = new PlaylistEntry();
     $li.addEventListener('click', function(e) {
       entry.onClick.bind($li)(e);
-      videoPlay.updateButton.bind($video)();
+      videoPlayer.updatePlayButton.bind($video)();
     });
 
     // visual elements

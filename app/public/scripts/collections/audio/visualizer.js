@@ -1,32 +1,15 @@
-function hasGetUserMedia() {
-  return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-}
-
-export function AudioVisualize($canvas, $audio, opts={}) {
+export function AudioVisualizer(audioContext) {
   var self = this;
+  var initialized = false;
 
   var displayBins = 512; // NOTE: power of 2
   var floorLevel = 96;
   var magicConstant = 42;
   var multiplier = Math.pow(22050, 1/displayBins) * Math.pow(1/magicConstant, 1/displayBins);
 
-  var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   var audioAnalyserNode = audioContext.createAnalyser();
   audioAnalyserNode.fftSize = displayBins * 8;
 
-  /* optional parameters */
-  this.strokeColor = opts.hasOwnProperty('color') ? opts['color'] : '#EF9563';
-  this.backgroundColor = opts.hasOwnProperty('backgroundColor') ? opts['backgroundColor'] : 'transparent';
-  this.drawFilled = opts.hasOwnProperty('drawFilled') ? opts['drawFilled'] : false;
-  this.stream = opts.hasOwnProperty('stream') ? opts['stream'] : false;
-
-  var initialized = false;
-  var canvas = {
-    context: $canvas.getContext('2d'),
-    element: $canvas,
-    height: parseFloat(window.getComputedStyle($canvas, null).height, 10),
-    width: parseFloat(window.getComputedStyle($canvas, null).width, 10)
-  };
   var finalBins = [];
   var lookupTable = [];
   for (var i=0; i<displayBins; i++) {
@@ -35,7 +18,7 @@ export function AudioVisualize($canvas, $audio, opts={}) {
   }
 
   var binLengths = [];
-  var binWidth = Math.ceil(canvas.width / (displayBins - 1));
+  var binWidth; // set in init
 
   /* methods */
 
@@ -50,7 +33,7 @@ export function AudioVisualize($canvas, $audio, opts={}) {
     // basically any volume will push over [floorLevel] so set = bottom threshold
     var height = Math.max(0, (binValue - floorLevel)); // logarithmic
     // scale to height of bar
-    height = (height / (340 - floorLevel) * canvas.height * 0.8);
+    height = (height / (240 - floorLevel) * self.canvas.height * 0.8);
     return height;
   };
 
@@ -78,11 +61,11 @@ export function AudioVisualize($canvas, $audio, opts={}) {
 
   this.paint = function() { // who ain't got no bars? ain't scream bih
     window.requestAnimationFrame(self.paint);
-    canvas.context.clearRect(0, 0, canvas.width, canvas.height);
+    self.canvas.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
     if (!initialized) return console.log('webkit audio context not initialized');
 
-    canvas.context.fillStyle = self.backgroundColor;
-  	canvas.context.fillRect(0, 0, canvas.width, canvas.height);
+    self.canvas.context.fillStyle = self.backgroundColor;
+  	self.canvas.context.fillRect(0, 0, self.canvas.width, self.canvas.height);
 
     var bins = audioAnalyserNode.frequencyBinCount;
     var data = new Uint8Array(bins);
@@ -90,9 +73,9 @@ export function AudioVisualize($canvas, $audio, opts={}) {
 
     self.updateBins(data); // change bin info on audio
 
-    canvas.context.fillStyle = self.strokeColor;
-    canvas.context.beginPath();
-    canvas.context.moveTo(0, canvas.height - self.getBinHeight(0));
+    self.canvas.context.fillStyle = self.strokeColor;
+    self.canvas.context.beginPath();
+    self.canvas.context.moveTo(0, self.canvas.height - self.getBinHeight(0));
 
     var i;
     for (i=0; i<displayBins-2;) {
@@ -101,42 +84,53 @@ export function AudioVisualize($canvas, $audio, opts={}) {
       var nextX = (i + binLengths[i]) * binWidth; // first sub-bin of next
       var x = (thisX + nextX) / 2;
       // y
-      var thisY = canvas.height - self.getBinHeight(i);
-      var nextY = canvas.height - self.getBinHeight(i + binLengths[i]);
+      var thisY = self.canvas.height - self.getBinHeight(i);
+      var nextY = self.canvas.height - self.getBinHeight(i + binLengths[i]);
       var y = (thisY + nextY) / 2;
 
-      canvas.context.quadraticCurveTo(thisX, thisY, x, y); // connect sub-bins
+      self.canvas.context.quadraticCurveTo(thisX, thisY, x, y); // connect sub-bins
 
       i += binLengths[i];
     }
-    canvas.context.quadraticCurveTo(
+    self.canvas.context.quadraticCurveTo(
       i * binWidth,
-      canvas.height - self.getBinHeight(i),
+      self.canvas.height - self.getBinHeight(i),
       (i+1) * binWidth,
-      canvas.height - self.getBinHeight(i+1)
+      self.canvas.height - self.getBinHeight(i+1)
     ); // connect bins
 
     if (self.drawFilled) {
-      canvas.context.lineTo(canvas.width, canvas.height);
-      canvas.context.lineTo(0, canvas.height);
-      canvas.context.fill();
+      self.canvas.context.lineTo(self.canvas.width, self.canvas.height);
+      self.canvas.context.lineTo(0, self.canvas.height);
+      self.canvas.context.fill();
     } else {
-      canvas.context.stroke();
+      self.canvas.context.stroke();
     }
   };
 
-  this.init = function() {
+  this.init = function($audio, $canvas, opts={}) {
+    /* optional parameters */
+    self.strokeColor = opts.hasOwnProperty('color') ? opts['color'] : '#EF9563';
+    self.backgroundColor = opts.hasOwnProperty('backgroundColor') ? opts['backgroundColor'] : 'transparent';
+    self.drawFilled = opts.hasOwnProperty('drawFilled') ? opts['drawFilled'] : false;
+    self.stream = opts.hasOwnProperty('stream') ? opts['stream'] : false;
+
     // setup canvas
-    canvas.context.strokeStyle = self.strokeColor;
+    self.canvas = {
+      context: $canvas.getContext('2d'),
+      element: $canvas,
+      height: parseFloat(window.getComputedStyle($canvas, null).height, 10),
+      width: parseFloat(window.getComputedStyle($canvas, null).width, 10)
+    };
+    self.canvas.context.strokeStyle = self.strokeColor;
+    binWidth = Math.ceil(self.canvas.width / (displayBins - 1));
+
     window.requestAnimationFrame(self.paint);
 
     // setup audio element / stream
-    var src;
-    if ($audio) {
-      src = audioContext.createMediaElementSource($audio);
-    } else if (self.stream) {
-      src = audioContext.createMediaStreamSource(self.stream);
-    }
+    var src = !self.stream ?
+      audioContext.createMediaElementSource($audio) :
+      audioContext.createMediaStreamSource($audio);
 
     self.createLookupTable(audioAnalyserNode.frequencyBinCount);
     src.connect(audioAnalyserNode);
@@ -150,4 +144,4 @@ export function AudioVisualize($canvas, $audio, opts={}) {
 };
 
 
-export default { AudioVisualize }
+export default { AudioVisualizer }

@@ -1,4 +1,4 @@
-function parameterize(params) {
+export function parameterize(params) {
   var encoded = '';
   for (var prop in params) {
     if (params.hasOwnProperty(prop)) {
@@ -9,7 +9,7 @@ function parameterize(params) {
   return encoded;
 }
 
-function getAjax(url, params, $elements, callback) {
+export function getAjax(url, params, $elements, callback) {
   var xhttp = new XMLHttpRequest();
   var encodedUrl = (Object.keys(params).length > 0) ?
     url+'?'+parameterize(params): url;

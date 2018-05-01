@@ -1,4 +1,4 @@
-import fetch from './fetch.js';
+import { getAjax } from './fetch.js';
 import {
   $playlist,
   $timeTotal,
@@ -10,25 +10,16 @@ import {
 // base api routes
 var __videos = 'api/videos';
 
-function _video(opts={}, callback=_videoDefaultAjax) {
+function _video(opts={}, callback) {
   /* opts = { id: '' } */
-  fetch.getAjax(
-    __videos,
-    opts,
-    {
-      video: $video,
-      title: $title,
-      timeTotal: $timeTotal,
-      uploader: $uploader,
-      playlist: $playlist
-    },
-    callback
-  );
-}
-
-function _videoDefaultAjax(err, $elements, data) {
-  if (err) return console.error(err);
-  console.log(data);
+  var $elements = {
+    video: $video,
+    title: $title,
+    timeTotal: $timeTotal,
+    uploader: $uploader,
+    playlist: $playlist
+  };
+  return getAjax(__videos, opts, $elements, callback);
 }
 
 export default { _video }

@@ -1,7 +1,7 @@
 // elements
-export var $audio = document.getElementById('mic-input');
-export var $canvas = document.getElementById('mic-levels');
-export var $music = document.getElementById('music-sheet');
+export var $inputAudio = document.getElementById('input-audio');
+export var $micLevels = document.getElementById('mic-levels');
+export var $music = document.getElementById('music');
 export var $musicTitle = document.getElementById('music-title');
 export var $playlist = document.getElementById('catalogue');
 export var $play = document.getElementById('play');
@@ -15,14 +15,27 @@ export var $video = document.getElementById('video');
 export var $videoOverlay = document.getElementById('video-overlay');
 export var $volume = document.getElementById('volume');
 
+export var $detector = document.getElementById('detector');
+export var $detune = document.getElementById('detune-amt');
+export var $flat = document.getElementById('flat');
+export var $note = document.getElementById('note');
+export var $pitch = document.getElementById('pitch');
+export var $sharp = document.getElementById('sharp');
+
 export default {
-  $audio,
-  $canvas,
-  $music,
+  $detector,
+  $detune,
+  $flat,
+  $inputAudio,
+  $micLevels, // canvas
+  $music, // psuedo-canvas
   $musicTitle,
+  $note,
+  $pitch,
   $playlist,
   $play,
   $progressBar,
+  $sharp,
   $settings,
   $timePassed,
   $timeTotal,

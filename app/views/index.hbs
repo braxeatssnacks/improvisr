@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="input__audio">
+    <div id="input-audio" class="relative animated input__audio">
       <div class="backdrop-wrapper">
         <canvas id="mic-levels" height="100px" width="400px"></canvas>
       </div>
@@ -77,6 +77,19 @@
   <div class="music__sheet-wrapper">
     <div id="music-sheet" class=" center music__sheet">
       <h2 id="music-title" class="music__title" contenteditable>My Fabulous Piece</h2>
+      <h4>by me</h4>
+      <div id="music" class="music"></div>
+
+      <div id="detector" class="detector vague">
+  			<div class="pitch"><span id="pitch">--</span>Hz</div>
+  			<div class="note"><span id="note">--</span></div>
+  			<div class="detune">
+          <span id="detune-amt" class="detune__amt">--</span>
+          <span id="flat" class="flat-cents">cents &#9837;</span>
+          <span id="sharp" class="sharp-cents">cents &#9839;</span>
+        </div>
+  		</div>
+
     </div>
   </div>
 </div>
