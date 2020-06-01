@@ -1,8 +1,12 @@
 {
   "name": "improvisr",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "COMS4170 UI Final Project",
   "main": "app.js",
+  "engines": {
+    "node": ">=8.2.1",
+    "npm": ">=5.0.0"
+  },
   "scripts": {
     "start": "nodemon app.js",
     "clean": "rm -rf ./app/public/videos/* && rm -rf ./app/public/images/thumbs/* && rm -rf ./app/db.json",
@@ -21,8 +25,7 @@
     "express": "^4.16.3",
     "express-hbs": "^1.0.4",
     "lodash": "^4.17.10",
-    "node-sass-middleware": "^0.11.0",
-    "npm": "^5.8.0"
+    "node-sass-middleware": "^0.11.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.3",
